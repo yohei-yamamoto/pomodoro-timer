@@ -1,22 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 
-class Timer extends React.Component {
-  render() {
-    const timer = 1000;
-    return(
-    <div>{timer}</div>
+type Props = {
+  time: number
+}
+
+const Timer:React.FC<Props> = (props) => {
+  return(
+    <div>{props.time}</div>
   );
-  }
 }
 
 function App() {
+  const [time, setTime] = useState(100);
+  var timer: number;
+  timer = 1000;
+  var timerId: NodeJS.Timer;
   return (
     <div className="App">
-      <input></input>
-      <button onClick={() => console.log('click')}>start</button>
-      <button>stop</button>
-      <Timer />
+      <input type="number"
+      value={time}
+      onChange={(event) => setTime(Number(event.target.value))}/>
+      <button onClick={
+        () => {
+          timer = time;
+          timerId = setInterval(() => {
+          setTime(t => t-1) }, 1000)}}>start</button>
+      <button onClick={() => clearInterval(timerId)}>stop</button>
+      <Timer time={time} />
     </div>
   );
 }
