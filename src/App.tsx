@@ -13,9 +13,9 @@ const Timer:React.FC<Props> = (props) => {
 
 function App() {
   const [time, setTime] = useState(100);
-  var timer: number;
-  timer = 1000;
-  var timerId: NodeJS.Timer;
+  const [isTimerCounting, setIsTimerCounting] = useState(false);
+  const [timerId, setTimerId] = useState(0);
+  var interval: NodeJS.Timer
   return (
     <div className="App">
       <input type="number"
@@ -23,10 +23,18 @@ function App() {
       onChange={(event) => setTime(Number(event.target.value))}/>
       <button onClick={
         () => {
-          timer = time;
-          timerId = setInterval(() => {
-          setTime(t => t-1) }, 1000)}}>start</button>
-      <button onClick={() => clearInterval(timerId)}>stop</button>
+          if(isTimerCounting === false) {
+            interval = setInterval(() => setTime(t => t-1), 1000)
+              setTimerId(Number(interval))
+              setIsTimerCounting(true)
+            }
+          }
+        }>start</button>
+      <button onClick={() => {
+        if(isTimerCounting === true) {
+          clearInterval(timerId)
+          setIsTimerCounting(false)
+        }}}>stop</button>
       <Timer time={time} />
     </div>
   );
