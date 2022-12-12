@@ -11,6 +11,17 @@ const Timer:React.FC<Props> = (props) => {
   );
 }
 
+function playSound() {
+  const audioCtx = new window.AudioContext();
+  const oscillator = audioCtx.createOscillator();
+
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(1200, audioCtx.currentTime);
+  oscillator.connect(audioCtx.destination);
+  oscillator.start(audioCtx.currentTime);
+  oscillator.stop(audioCtx.currentTime + 0.5);
+}
+
 function App() {
   const [inputTime, setInputTime] = useState(10);
   const [counter, setCounter] = useState(10);
@@ -29,11 +40,12 @@ function App() {
       }}/>
       <button onClick={
         () => {
-          if(isTimerCounting === false) {
+          if(isTimerCounting === false && counter > 0) {
             interval = setInterval(() => setCounter(t => t-1), 1000)
             setIntervalId(Number(interval))
             setIsTimerCounting(true)
             timeout = setTimeout(() => {
+              playSound()
               clearInterval(interval)
               setIsTimerCounting(false)
             }, counter * 1000)
