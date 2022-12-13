@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
+import timerSound from './Timer.mp3';
 
 type Props = {
   time: number
@@ -12,14 +13,8 @@ const Timer:React.FC<Props> = (props) => {
 }
 
 function playSound() {
-  const audioCtx = new window.AudioContext();
-  const oscillator = audioCtx.createOscillator();
-
-  oscillator.type = "sine";
-  oscillator.frequency.setValueAtTime(1200, audioCtx.currentTime);
-  oscillator.connect(audioCtx.destination);
-  oscillator.start(audioCtx.currentTime);
-  oscillator.stop(audioCtx.currentTime + 0.5);
+  const audio = new Audio(timerSound);
+  audio.play()
 }
 
 function App() {
