@@ -35,6 +35,7 @@ function App() {
       }}/>
       <button onClick={
         () => {
+          if (counter === 0 ) setCounter(inputTime)
           if(isTimerCounting === false && counter > 0) {
             interval = setInterval(() => setCounter(t => t-1), 1000)
             setIntervalId(Number(interval))
