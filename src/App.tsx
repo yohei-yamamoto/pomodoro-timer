@@ -8,7 +8,7 @@ type Props = {
 
 const Timer:React.FC<Props> = (props) => {
   return(
-    <div>{props.time}</div>
+    <div>{Math.floor(props.time / 60)}:{(props.time % 60).toString().padStart(2, "0")}</div>
   );
 }
 
@@ -18,8 +18,9 @@ function playSound() {
 }
 
 function App() {
-  const [inputTime, setInputTime] = useState(10);
-  const [counter, setCounter] = useState(10);
+  const [inputTimeMinites, setInputTimeMinites] = useState(10);
+  const [inputTimeSeconds, setInputTimeSeconds] = useState(10);
+  const [counter, setCounter] = useState(610);
   const [isTimerCounting, setIsTimerCounting] = useState(false);
   const [intervalId, setIntervalId] = useState(0);
   const [timeoutId, setTimeoutId] = useState(0);
@@ -28,14 +29,20 @@ function App() {
   return (
     <div className="App">
       <input type="number"
-      value={inputTime}
+      value={inputTimeMinites}
       onChange={(event) => {
-        setInputTime(Number(event.target.value))
-        setCounter(Number(event.target.value))
-      }}/>
+        setInputTimeMinites(Number(event.target.value))
+        setCounter(Number(event.target.value) * 60 + inputTimeSeconds)
+      }}/>分
+      <input type="number"
+      value={inputTimeSeconds}
+      onChange={(event) => {
+        setInputTimeSeconds(Number(event.target.value))
+        setCounter(inputTimeMinites * 60 + Number(event.target.value))
+      }}/>秒
       <button onClick={
         () => {
-          if (counter === 0 ) setCounter(inputTime)
+          if (counter === 0 ) setCounter(inputTimeMinites * 60 + inputTimeSeconds)
           if(isTimerCounting === false && counter > 0) {
             interval = setInterval(() => setCounter(t => t-1), 1000)
             setIntervalId(Number(interval))
