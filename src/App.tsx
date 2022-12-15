@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import './App.css';
 import timerSound from './Timer.mp3';
 
@@ -8,7 +10,7 @@ type Props = {
 
 const Timer:React.FC<Props> = (props) => {
   return(
-    <div>{Math.floor(props.time / 60)}:{(props.time % 60).toString().padStart(2, "0")}</div>
+    <div className="Timer">{Math.floor(props.time / 60)}:{(props.time % 60).toString().padStart(2, "0")}</div>
   );
 }
 
@@ -28,19 +30,25 @@ function App() {
   var timeout: NodeJS.Timeout
   return (
     <div className="App">
-      <input type="number"
-      value={inputTimeMinites}
-      onChange={(event) => {
-        setInputTimeMinites(Number(event.target.value))
-        setCounter(Number(event.target.value) * 60 + inputTimeSeconds)
-      }}/>分
-      <input type="number"
-      value={inputTimeSeconds}
-      onChange={(event) => {
-        setInputTimeSeconds(Number(event.target.value))
-        setCounter(inputTimeMinites * 60 + Number(event.target.value))
-      }}/>秒
-      <button onClick={
+      <div>
+        <TextField type="number"
+        value={inputTimeMinites}
+        onChange={(event) => {
+          setInputTimeMinites(Number(event.target.value))
+          setCounter(Number(event.target.value) * 60 + inputTimeSeconds)
+        }}
+        variant="standard"
+        label="分"/>
+        <TextField type="number"
+        value={inputTimeSeconds}
+        onChange={(event) => {
+          setInputTimeSeconds(Number(event.target.value))
+          setCounter(inputTimeMinites * 60 + Number(event.target.value))
+        }}
+        variant="standard"
+        label="秒"/>
+      </div>
+      <Button onClick={
         () => {
           if (counter === 0 ) setCounter(inputTimeMinites * 60 + inputTimeSeconds)
           if(isTimerCounting === false && counter > 0) {
@@ -55,13 +63,15 @@ function App() {
             setTimeoutId(Number(timeout))
           }
         }
-      }>start</button>
-      <button onClick={() => {
+      }
+      variant="outlined">start</Button>
+      <Button onClick={() => {
         if(isTimerCounting === true) {
           clearInterval(intervalId)
           clearTimeout(timeoutId)
           setIsTimerCounting(false)
-        }}}>stop</button>
+        }}}
+        variant="outlined">stop</Button>
       <Timer time={counter} />
     </div>
   );
