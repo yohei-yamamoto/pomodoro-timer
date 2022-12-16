@@ -36,6 +36,11 @@ function App() {
         onChange={(event) => {
           setInputTimeMinites(Number(event.target.value))
           setCounter(Number(event.target.value) * 60 + inputTimeSeconds)
+          if (isTimerCounting) {
+            clearInterval(intervalId)
+            clearTimeout(timeoutId)
+            setIsTimerCounting(false)
+          }
         }}
         variant="standard"
         label="分"/>
@@ -44,6 +49,11 @@ function App() {
         onChange={(event) => {
           setInputTimeSeconds(Number(event.target.value))
           setCounter(inputTimeMinites * 60 + Number(event.target.value))
+          if (isTimerCounting) {
+            clearInterval(intervalId)
+            clearTimeout(timeoutId)
+            setIsTimerCounting(false)
+          }
         }}
         variant="standard"
         label="秒"/>
