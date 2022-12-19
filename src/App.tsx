@@ -58,6 +58,44 @@ function App() {
         variant="standard"
         label="秒"/>
       </div>
+      <div>
+      <Button onClick={
+        () => {
+          if (isTimerCounting) {
+            clearInterval(intervalId)
+            clearTimeout(timeoutId)
+            setIsTimerCounting(false)
+          }
+          setInputTimeMinites(25)
+          setInputTimeSeconds(0)
+          setCounter(25 * 60)
+        }
+      }>25分</Button>
+      <Button onClick={
+        () => {
+          if (isTimerCounting) {
+            clearInterval(intervalId)
+            clearTimeout(timeoutId)
+            setIsTimerCounting(false)
+          }
+          setInputTimeMinites(15)
+          setInputTimeSeconds(0)
+          setCounter(15 * 60)
+        }
+      }>15分</Button>
+      <Button onClick={
+        () => {
+          if (isTimerCounting) {
+            clearInterval(intervalId)
+            clearTimeout(timeoutId)
+            setIsTimerCounting(false)
+          }
+          setInputTimeMinites(5)
+          setInputTimeSeconds(0)
+          setCounter(5 * 60)
+        }
+      }>5分</Button>
+      </div>
       <Button onClick={
         () => {
           if (counter === 0 ) setCounter(inputTimeMinites * 60 + inputTimeSeconds)
