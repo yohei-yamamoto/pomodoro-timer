@@ -34,6 +34,7 @@ function App() {
         <TextField type="number"
         value={inputTimeMinites}
         onChange={(event) => {
+          if (Number(event.target.value) < 0) event.target.value = "0"
           setInputTimeMinites(Number(event.target.value))
           setCounter(Number(event.target.value) * 60 + inputTimeSeconds)
           if (isTimerCounting) {
@@ -47,6 +48,8 @@ function App() {
         <TextField type="number"
         value={inputTimeSeconds}
         onChange={(event) => {
+          if (Number(event.target.value) < 0) event.target.value = "0"
+          if (Number(event.target.value) > 59) event.target.value = "59"
           setInputTimeSeconds(Number(event.target.value))
           setCounter(inputTimeMinites * 60 + Number(event.target.value))
           if (isTimerCounting) {
