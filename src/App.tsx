@@ -26,6 +26,7 @@ function App() {
   const [isTimerCounting, setIsTimerCounting] = useState(false);
   const [intervalId, setIntervalId] = useState(0);
   const [timeoutId, setTimeoutId] = useState(0);
+  const startButton = document.getElementById("startButton")
   var interval: NodeJS.Timer
   var timeout: NodeJS.Timeout
   return (
@@ -37,6 +38,7 @@ function App() {
           if (Number(event.target.value) < 0) event.target.value = "0"
           setInputTimeMinites(Number(event.target.value))
           setCounter(Number(event.target.value) * 60 + inputTimeSeconds)
+          if (startButton) startButton.textContent = "start"
           if (isTimerCounting) {
             clearInterval(intervalId)
             clearTimeout(timeoutId)
@@ -52,6 +54,7 @@ function App() {
           if (Number(event.target.value) > 59) event.target.value = "59"
           setInputTimeSeconds(Number(event.target.value))
           setCounter(inputTimeMinites * 60 + Number(event.target.value))
+          if (startButton) startButton.textContent = "start"
           if (isTimerCounting) {
             clearInterval(intervalId)
             clearTimeout(timeoutId)
@@ -72,6 +75,7 @@ function App() {
           setInputTimeMinites(25)
           setInputTimeSeconds(0)
           setCounter(25 * 60)
+          if (startButton) startButton.textContent = "start"
         }
       }>25分</Button>
       <Button onClick={
@@ -84,6 +88,7 @@ function App() {
           setInputTimeMinites(15)
           setInputTimeSeconds(0)
           setCounter(15 * 60)
+          if (startButton) startButton.textContent = "start"
         }
       }>15分</Button>
       <Button onClick={
@@ -96,12 +101,16 @@ function App() {
           setInputTimeMinites(5)
           setInputTimeSeconds(0)
           setCounter(5 * 60)
+          if (startButton) startButton.textContent = "start"
         }
       }>5分</Button>
       </div>
       <Button onClick={
         () => {
-          if (counter === 0 ) setCounter(inputTimeMinites * 60 + inputTimeSeconds)
+          if (counter === 0 ) {
+            setCounter(inputTimeMinites * 60 + inputTimeSeconds)
+            if (startButton) startButton.textContent = "start"
+          }
           if(isTimerCounting === false && counter > 0) {
             interval = setInterval(() => setCounter(t => t-1), 1000)
             setIntervalId(Number(interval))
@@ -110,12 +119,14 @@ function App() {
               playSound()
               clearInterval(interval)
               setIsTimerCounting(false)
+              if (startButton) startButton.textContent = "reset"
             }, counter * 1000)
             setTimeoutId(Number(timeout))
           }
         }
       }
-      variant="outlined">start</Button>
+      variant="outlined"
+      id="startButton">start</Button>
       <Button onClick={() => {
         if(isTimerCounting === true) {
           clearInterval(intervalId)
